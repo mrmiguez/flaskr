@@ -61,7 +61,7 @@ def add_entry():
         abort(401)
     db = get_db()
     db.execute('insert into entries (title, text) values (?, ?)',
-               [request.form['title'], request.form['text']])
+                 [request.form['title'], request.form['text']])
     db.commit()
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
@@ -77,7 +77,7 @@ def login():
             error = 'Invalid password'
         else:
             session['logged_in'] = True
-            flash("Logged in")
+            flash('You were logged in')
             return redirect(url_for('show_entries'))
     return render_template('login.html', error=error)
 
@@ -85,5 +85,5 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
-    flash("Logged out")
-    return render_template(url_for('show_entries'))
+    flash('You were logged out')
+    return redirect(url_for('show_entries'))
